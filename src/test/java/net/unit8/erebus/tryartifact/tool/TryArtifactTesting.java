@@ -425,21 +425,21 @@ public class TryArtifactTesting {
         }
     }
 
-    public void assertCompletion(boolean after, String code, boolean isSmart, String... expected) {
+    public void assertCompletion(boolean after, String code, String... expected) {
         if (!after) {
             setCommandInput("\n");
         } else {
-            assertCompletion(code, isSmart, expected);
+            assertCompletion(code, expected);
         }
     }
 
-    public void assertCompletion(String code, boolean isSmart, String... expected) {
-        List<String> completions = computeCompletions(code, isSmart);
+    public void assertCompletion(String code, String... expected) {
+        List<String> completions = computeCompletions(code);
         assertEquals(completions, Arrays.asList(expected), "Command: " + code + ", output: " +
                 completions.toString());
     }
 
-    private List<String> computeCompletions(String code, boolean isSmart) {
+    private List<String> computeCompletions(String code) {
         TryJShellTool repl = this.repl != null ? this.repl
                                       : new TryJShellTool(null, null, null, null, null, null, null);
         if (this.repl == null) {
@@ -451,8 +451,7 @@ public class TryArtifactTesting {
         List<SourceCodeAnalysis.Suggestion> completions =
                 repl.commandCompletionSuggestions(code, cursor, new int[1]); //XXX: ignoring anchor for now
         return completions.stream()
-                          .filter(s -> isSmart == s.isSmart)
-                          .map(s -> s.continuation)
+                          .map(s -> s.continuation())
                           .distinct()
                           .collect(Collectors.toList());
     }

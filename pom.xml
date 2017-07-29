@@ -11,7 +11,7 @@
 
     <groupId>net.unit8.tryartifact</groupId>
     <artifactId>try-artifact</artifactId>
-    <version>0.2.0</version>
+    <version>0.2.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <description>Try a maven artifact on-demand in JShell</description>
@@ -32,12 +32,11 @@
                 <version>3.1</version>
                 <configuration>
                     <fork>true</fork>
-                    <executable>/usr/lib/jvm/java-9-jdk/bin/javac</executable>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <compilerArgs>
                         <arg>-XDignore.symbol.file</arg>
-                        <arg>-XaddExports:java.jshell/jdk.internal.jshell.tool=ALL-UNNAMED</arg>
+                        <arg>--add-exports</arg><arg>java.jshell/jdk.internal.jshell.tool=ALL-UNNAMED</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>

@@ -1,8 +1,9 @@
 package net.unit8.erebus.tryartifact.command;
 
-import jdk.jshell.SourceCodeAnalysis;
+import jdk.jshell.SourceCodeAnalysis.Suggestion;
 import net.unit8.erebus.ArtifactSearcher;
 import net.unit8.erebus.Erebus;
+import net.unit8.erebus.tryartifact.tool.SuggestionImpl;
 import net.unit8.erebus.tryartifact.tool.TryJShellTool;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.collection.DependencyCollectionException;
@@ -48,12 +49,12 @@ public class TryArtifactCommandRegister {
                     }
                 },
                 (code, cursor, anchor) -> {
-                    List<SourceCodeAnalysis.Suggestion> results = new ArrayList<>();
+                    List<Suggestion> results = new ArrayList<>();
                     if (code.length() == 0) return results;
                     try {
                         List<Artifact> artifacts = searcher.searchIncremental(code);
                         artifacts.stream()
-                                .map(a -> new SourceCodeAnalysis.Suggestion(a.toString(), false))
+                                .map(a -> new SuggestionImpl(a.toString(), false))
                                 .forEach(results::add);
                         anchor[0] = 0; // code.length();
                     } catch (IOException | IllegalArgumentException ignore) {

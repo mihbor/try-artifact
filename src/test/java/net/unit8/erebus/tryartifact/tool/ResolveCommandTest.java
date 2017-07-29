@@ -11,7 +11,7 @@ public class ResolveCommandTest extends TryArtifactTesting {
     public void testBadArtifactCoordinate() {
         test(
                 a -> assertCommand(a, "/resolve bad", "|  Bad artifact coordinates bad, expected format is <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>\n"),
-                a -> assertCompletion(a, "/resolve hoge:hoge:hoge:hoge:hoge:hoge|", true)
+                a -> assertCompletion(a, "/resolve hoge:hoge:hoge:hoge:hoge:hoge|")
         );
     }
 }

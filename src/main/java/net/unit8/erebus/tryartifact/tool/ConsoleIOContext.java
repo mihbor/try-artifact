@@ -236,7 +236,7 @@ class ConsoleIOContext extends IOContext {
         if (prefix.isEmpty() && buffer.trim().startsWith("/")) {
             doc = repl.commandDocumentation(buffer, cursor);
         } else {
-            doc = repl.analysis.documentation(prefix + buffer, cursor + prefix.length());
+            doc = repl.analysis.documentation(prefix + buffer, cursor + prefix.length(), false).toString();
         }
 
         try {
